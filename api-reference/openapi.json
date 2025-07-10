@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
+    "title": "Voltai API Docs.",
     "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
     "license": {
       "name": "MIT"
@@ -19,20 +19,20 @@
     }
   ],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+    "/chat/query": {
+      "post": {
+        "description": "API to ask question from Voltai Agent.",
+        "requestBody": {
+          "description": "Ask a question.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatQuery"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Plant response",
@@ -170,21 +170,25 @@
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
+      "ChatQuery": {
           {
             "required": [
-              "id"
+              "query",
+              "topic_name"
             ],
             "type": "object",
             "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+              "query": {
+                "description": "User query.",
+                "type": "string"
+              },
+              "topic_name": {
+                "description": "Topic name.",
+                "type": "string"
+              },
+              "chat_id": {
+                "description": "If you want to ask a question from a previous thread.",
+                "type": "string"
               }
             }
           }
