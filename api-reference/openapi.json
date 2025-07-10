@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Voltai API Docs.",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "description": ".",
     "license": {
       "name": "MIT"
     },
@@ -61,28 +61,6 @@
       }
     }
   },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
-      }
-    }
-  },
   "components": {
     "schemas": {
       "ChatQuery": {
@@ -108,16 +86,11 @@
       },
       "Error": {
         "required": [
-          "error",
-          "message"
+          "detail",
         ],
         "type": "object",
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
+          "detail": {
             "type": "string"
           }
         }
