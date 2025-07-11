@@ -86,7 +86,7 @@
       },
       "Error": {
         "required": [
-          "detail",
+          "detail"
         ],
         "type": "object",
         "properties": {
