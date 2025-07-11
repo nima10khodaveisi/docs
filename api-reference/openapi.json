@@ -35,13 +35,13 @@
         },
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Agent response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Plant"
+                    "$ref": "#/components/schemas/ChatResponse"
                   }
                 }
               }
@@ -92,6 +92,16 @@
         "properties": {
           "detail": {
             "type": "string"
+          }
+        }
+      },
+      "ChatResponse": {
+        "description": "Agent response item.",
+        "type": "object",
+        "properties": {
+          "answer": {
+            "type": "string",
+            "description": "Answer text returned by the Voltai agent."
           }
         }
       }
