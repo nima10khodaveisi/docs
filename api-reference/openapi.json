@@ -12,15 +12,18 @@
   "servers": [
     {
       "url": "https://api-prod.voltai.ai"
+    },
+    {
+      "url": "http://localhost:8000"
     }
   ],
   "security": [
     {
-      "bearerAuth": []
+      "ApiKeyAuth": []
     }
   ],
   "paths": {
-    "/chat/query": {
+    "/chat/query/": {
       "post": {
         "description": "API to ask question from Voltai Agent.",
         "requestBody": {
@@ -100,17 +103,47 @@
         "description": "Agent response item.",
         "type": "object",
         "properties": {
-          "answer": {
+          "final_answer": {
             "type": "string",
             "description": "Answer text returned by the Voltai agent."
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Chat ID. You can use this ID to ask a question from a previous thread."
+          },
+          "conv_id": {
+            "type": "string",
+            "description": "Conversation ID. This can be used for debugging purposes."
+          },
+          "sources": {
+            "type": "array",
+            "description": "Sources used to answer the question.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source_name": {
+                  "type": "string",
+                  "description": "Source Name."
+                },
+                "page": {
+                  "type": "integer",
+                  "description": "Page number of the source."
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Source URL. Uses Voltai CDN."
+                }
+              }
+            }
           }
         }
       }
     },
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
       }
     }
   }
