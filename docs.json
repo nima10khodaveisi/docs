@@ -10,7 +10,17 @@
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
-
+     {
+        "tab": "UI Widget",
+        "groups": [
+          {
+            "group": "Widget",
+            "pages": [
+              "widget/introduction"
+            ]
+          }
+        ]
+      },
       {
         "tab": "API Reference",
         "groups": [
