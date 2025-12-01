@@ -16,7 +16,8 @@
           {
             "group": "Widget",
             "pages": [
-              "widget/introduction"
+              "widget/introduction",
+              "widget/getting-started"
             ]
           }
         ]
