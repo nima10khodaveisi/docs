@@ -94,16 +94,14 @@ Send a pre-filled question based on where the user is on your site:
   async function askAboutPricing() {
     voltai.open();
     await voltai.sendChat('What are your pricing plans?', {
-      topics: ['Sales', 'Pricing'],
-      newChat: true
+      topics: ['Sales', 'Pricing']
     });
   }
 
   async function askAboutIntegration() {
     voltai.open();
     await voltai.sendChat('How do I integrate with my existing systems?', {
-      topics: ['Technical', 'Integration'],
-      newChat: true
+      topics: ['Technical', 'Integration']
     });
   }
 </script>
@@ -198,8 +196,7 @@ Let users choose a topic before starting a chat:
     
     voltai.open();
     await voltai.sendChat(question, {
-      topics: [topic],
-      newChat: true
+      topics: [topic]
     });
     
     // Clear form
