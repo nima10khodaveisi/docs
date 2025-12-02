@@ -1,5 +1,59 @@
 ---
-title: "Introduction"
+title: Introduction
+description: Embed an AI-powered chat widget on your website
 ---
 
-test
+# Voltai Widget
+
+The Voltai Widget is an embeddable chat interface that brings AI-powered conversations to any website. Drop it into your site with a few lines of code and give your users instant access to intelligent assistance.
+
+## What it does
+
+The widget appears as a floating button in the corner of your page. When clicked, it opens a chat panel where users can ask questions and get responses powered by your configured AI backend.
+
+## Key features
+
+- **Easy integration** — Add two files and a small script to get started
+- **Customizable appearance** — Match your brand colors and styling
+- **Programmatic control** — Open, close, or send messages from your own code
+- **Event hooks** — React to widget state changes in your application
+- **Guest mode** — Let users chat without requiring authentication
+
+## Quick look
+
+Here's the minimum code to add the widget to a page:
+
+```html
+<!-- Include the styles -->
+<link rel="stylesheet" href="https://cdn.example.com/voltai/widget.css" />
+
+<!-- Include the script -->
+<script src="https://cdn.example.com/voltai/widget.js"></script>
+
+<!-- Initialize -->
+<script>
+  const voltai = Voltai.load({
+    apiKey: 'your-api-key'
+  });
+</script>
+```
+
+That's it. The widget button will appear, and users can start chatting.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" icon="rocket" href="/getting-started">
+    Step-by-step setup guide
+  </Card>
+  <Card title="Styling" icon="palette" href="/configuration/styling">
+    Customize colors and appearance
+  </Card>
+  <Card title="Functions" icon="code" href="/configuration/functions">
+    Control the widget programmatically
+  </Card>
+  <Card title="Examples" icon="lightbulb" href="/examples">
+    See common use cases
+  </Card>
+</CardGroup>
+

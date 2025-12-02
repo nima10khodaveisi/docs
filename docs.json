@@ -10,14 +10,29 @@
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
-     {
+      {
         "tab": "Widget",
         "groups": [
           {
-            "group": "Widget",
+            "group": "Getting Started",
             "pages": [
               "widget/introduction",
               "widget/getting-started"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "widget/configuration/styling",
+              "widget/configuration/functions",
+              "widget/configuration/events"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "widget/authentication",
+              "widget/examples"
             ]
           }
         ]
@@ -36,3 +51,4 @@
     ]
   }
 }
+
