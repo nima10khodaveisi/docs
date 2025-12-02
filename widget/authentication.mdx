@@ -1,0 +1,85 @@
+---
+title: Authentication
+description: User authentication modes and bot protection
+---
+
+# Authentication
+
+The Voltai Widget supports different authentication modes to fit your use case.
+
+## Guest mode
+
+Guest mode lets visitors use the chat without signing in. This is useful for public-facing support widgets where you want to minimize friction.
+
+Enable it with the `enableGuestUser` option:
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  enableGuestUser: true
+});
+```
+
+When guest mode is enabled:
+- Users can start chatting immediately
+- A temporary session is created automatically
+- Chat history persists across page refreshes (stored locally)
+
+<Note>
+  Guest sessions are anonymous. If you need to identify users or persist conversations long-term, consider using authenticated mode instead.
+</Note>
+
+## Bot protection with hCaptcha
+
+To protect against automated abuse, the widget integrates with [hCaptcha](https://www.hcaptcha.com/). When enabled, guest users complete an invisible captcha challenge before their session is created.
+
+This happens automatically when:
+- Guest mode is enabled (`enableGuestUser: true`)
+- hCaptcha is configured on your backend
+
+The captcha runs invisibly in the background—users won't see a challenge unless suspicious activity is detected.
+
+<Tip>
+  hCaptcha configuration is handled server-side. Contact your administrator if you need to enable or adjust captcha settings.
+</Tip>
+
+## Authenticated users (coming soon)
+
+For applications where users have accounts, the widget will support popup-based authentication. This allows:
+
+- Users to sign in with their existing credentials
+- Conversations tied to their account
+- Chat history synced across devices
+- Personalized responses based on user context
+
+<Warning>
+  Popup authentication is currently in development. Check back for updates or contact support for early access.
+</Warning>
+
+## How authentication works
+
+1. **Widget loads** — The SDK initializes and checks for existing sessions
+2. **Session check** — If a valid token exists locally, it's restored
+3. **New session** — If no session exists and guest mode is enabled:
+   - hCaptcha challenge runs (if configured)
+   - A guest token is fetched from the backend
+   - Token is stored locally for future visits
+4. **Ready** — The `onReady` callback fires and the widget is usable
+
+## Handling authentication errors
+
+If authentication fails, the widget won't render. You can detect this through the `onReady` callback timing or by checking console logs during development.
+
+Common issues:
+- **Invalid API key** — Verify your API key is correct
+- **hCaptcha failure** — May occur if the user's browser blocks the captcha script
+- **Network errors** — Check connectivity to the backend
+
+## Security considerations
+
+- **API keys** are visible in client-side code. They're scoped to your domain and only allow widget operations.
+- **Guest tokens** are short-lived and automatically refresh.
+- **hCaptcha** adds a layer of protection against automated abuse.
+
+For sensitive applications, authenticated mode (coming soon) provides stronger user verification.
+
