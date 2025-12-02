@@ -20,7 +20,7 @@ You'll need:
     Add the widget CSS file in your page's `<head>` section:
 
     ```html
-    <link rel="stylesheet" href="https://cdn.example.com/voltai/widget.css" />
+    <link rel="stylesheet" href="https://cdn.voltai.ai/widget@latest/voltai-widget.css" />
     ```
   </Step>
 
@@ -28,8 +28,15 @@ You'll need:
     Add the widget JavaScript file before your closing `</body>` tag:
 
     ```html
-    <script src="https://cdn.example.com/voltai/widget.js"></script>
+    <script src="https://cdn.voltai.ai/widget@latest/voltai-widget.js"></script>
     ```
+
+    <Tip>
+      Use `@latest` for automatic updates, or pin to a specific version like `@1.0.0` for stability:
+      ```html
+      <script src="https://cdn.voltai.ai/widget@1.0.0/voltai-widget.js"></script>
+      ```
+    </Tip>
   </Step>
 
   <Step title="Initialize the widget">
@@ -72,13 +79,13 @@ Here's a complete HTML page with the widget:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Website</title>
-  <link rel="stylesheet" href="https://cdn.example.com/voltai/widget.css" />
+  <link rel="stylesheet" href="https://cdn.voltai.ai/widget@latest/voltai-widget.css" />
 </head>
 <body>
   <h1>Welcome to my website</h1>
   <p>Click the chat button in the corner to get help.</p>
 
-  <script src="https://cdn.example.com/voltai/widget.js"></script>
+  <script src="https://cdn.voltai.ai/widget@latest/voltai-widget.js"></script>
   <script>
     const voltai = Voltai.load({
       apiKey: 'your-api-key',
