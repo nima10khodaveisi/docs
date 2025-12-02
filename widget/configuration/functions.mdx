@@ -1,0 +1,153 @@
+---
+title: Functions
+description: Control the widget programmatically with SDK methods
+---
+
+# Functions
+
+The `Voltai.load()` function returns an instance with methods to control the widget from your code.
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key'
+});
+
+// Now you can use voltai.open(), voltai.close(), etc.
+```
+
+## Widget visibility
+
+### open()
+
+Opens the chat panel.
+
+```javascript
+voltai.open();
+```
+
+### close()
+
+Closes the chat panel.
+
+```javascript
+voltai.close();
+```
+
+### toggle()
+
+Toggles the chat panel open or closed.
+
+```javascript
+voltai.toggle();
+```
+
+<Tip>
+  Use these methods to integrate the widget with your own UI. For example, open the chat when a user clicks a "Need help?" button.
+</Tip>
+
+## Sending messages
+
+### sendChat(query, options?)
+
+Sends a chat message programmatically. This lets you start conversations from your own code, like a search box or help button.
+
+```javascript
+await voltai.sendChat('How do I reset my password?');
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `query` | string | The message to send |
+| `options` | object | Optional settings (see below) |
+
+**Options:**
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `topics` | string[] | `[]` | Topics to associate with the message |
+| `newChat` | boolean | `false` | Start a new conversation |
+
+**Returns:** `Promise<void>`
+
+### Example: Send with topics
+
+```javascript
+await voltai.sendChat('Show me getting started guides', {
+  topics: ['Documentation', 'Tutorials']
+});
+```
+
+### Example: Start a new chat
+
+```javascript
+await voltai.sendChat('I have a billing question', {
+  newChat: true
+});
+```
+
+### Example: Combined with open
+
+```javascript
+// Open the widget and send a message
+voltai.open();
+await voltai.sendChat('What are your pricing plans?', {
+  topics: ['Sales'],
+  newChat: true
+});
+```
+
+<Note>
+  The widget must be initialized and authenticated before calling `sendChat()`. If authentication hasn't completed, the method will throw an error.
+</Note>
+
+## Cleanup
+
+### destroy()
+
+Removes the widget from the page and cleans up all resources.
+
+```javascript
+voltai.destroy();
+```
+
+Use this when:
+- Navigating away in a single-page app
+- Conditionally removing the widget
+- Reinitializing with different settings
+
+## Complete example
+
+Here's a page with custom buttons to control the widget:
+
+```html
+<button id="open-btn">Open Chat</button>
+<button id="close-btn">Close Chat</button>
+<button id="ask-btn">Ask a Question</button>
+
+<script src="https://cdn.example.com/voltai/widget.js"></script>
+<script>
+  const voltai = Voltai.load({
+    apiKey: 'your-api-key',
+    enableGuestUser: true
+  });
+
+  document.getElementById('open-btn').onclick = () => {
+    voltai.open();
+  };
+
+  document.getElementById('close-btn').onclick = () => {
+    voltai.close();
+  };
+
+  document.getElementById('ask-btn').onclick = async () => {
+    voltai.open();
+    await voltai.sendChat('How do I get started?', {
+      topics: ['Getting Started'],
+      newChat: true
+    });
+  };
+</script>
+```
+

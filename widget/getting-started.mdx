@@ -1,3 +1,121 @@
 ---
-title: "Getting Started"
+title: Getting Started
+description: Add the Voltai Widget to your website in minutes
 ---
+
+# Getting Started
+
+Follow these steps to add the Voltai Widget to your website.
+
+## Prerequisites
+
+You'll need:
+- An API key from your Voltai dashboard
+- Access to edit your website's HTML
+
+## Installation
+
+<Steps>
+  <Step title="Include the stylesheet">
+    Add the widget CSS file in your page's `<head>` section:
+
+    ```html
+    <link rel="stylesheet" href="https://cdn.example.com/voltai/widget.css" />
+    ```
+  </Step>
+
+  <Step title="Include the script">
+    Add the widget JavaScript file before your closing `</body>` tag:
+
+    ```html
+    <script src="https://cdn.example.com/voltai/widget.js"></script>
+    ```
+  </Step>
+
+  <Step title="Initialize the widget">
+    Call `Voltai.load()` with your configuration:
+
+    ```html
+    <script>
+      const voltai = Voltai.load({
+        apiKey: 'your-api-key',
+        enableGuestUser: true,
+        title: 'Support Chat'
+      });
+    </script>
+    ```
+  </Step>
+</Steps>
+
+## Configuration options
+
+The `Voltai.load()` function accepts a configuration object:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `apiKey` | string | required | Your API key for authentication |
+| `enableGuestUser` | boolean | `false` | Allow users to chat without signing in |
+| `title` | string | `"Voltai"` | Text shown in the widget header |
+| `colors` | object | — | Custom color theme (see [Styling](/configuration/styling)) |
+| `onReady` | function | — | Called when widget is ready |
+| `onOpen` | function | — | Called when widget opens |
+| `onClose` | function | — | Called when widget closes |
+
+## Basic example
+
+Here's a complete HTML page with the widget:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="stylesheet" href="https://cdn.example.com/voltai/widget.css" />
+</head>
+<body>
+  <h1>Welcome to my website</h1>
+  <p>Click the chat button in the corner to get help.</p>
+
+  <script src="https://cdn.example.com/voltai/widget.js"></script>
+  <script>
+    const voltai = Voltai.load({
+      apiKey: 'your-api-key',
+      enableGuestUser: true,
+      title: 'Help Center',
+      onReady: () => {
+        console.log('Widget is ready');
+      }
+    });
+  </script>
+</body>
+</html>
+```
+
+## What happens next
+
+Once initialized:
+
+1. A floating button appears in the bottom-right corner of your page
+2. Users click the button to open the chat panel
+3. They can type questions and receive AI-powered responses
+4. The widget automatically handles the conversation flow
+
+<Tip>
+  Store the returned `voltai` instance if you want to control the widget programmatically. See [Functions](/configuration/functions) for available methods.
+</Tip>
+
+## Troubleshooting
+
+**Widget doesn't appear**
+
+- Check that both the CSS and JS files are loaded (look for 404 errors in browser console)
+- Verify your API key is correct
+- Make sure `Voltai.load()` is called after the script loads
+
+**Console shows authentication errors**
+
+- Double-check your API key
+- If using guest mode, ensure `enableGuestUser: true` is set
+

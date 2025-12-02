@@ -1,0 +1,141 @@
+---
+title: Styling
+description: Customize the widget's appearance to match your brand
+---
+
+# Styling
+
+Make the widget feel like a natural part of your website by customizing its colors and appearance.
+
+## Widget title
+
+Set the `title` option to change the text displayed in the widget header:
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  title: 'Acme Support'
+});
+```
+
+## Custom colors
+
+Pass a `colors` object to override the default theme. You only need to specify the colors you want to change.
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  colors: {
+    bgButtonPrimary: '#FFC222',
+    textPrimaryBrand: '#FFC222',
+    iconPrimaryBrand: '#FFC222',
+    textPrimaryInverse: '#181D27',
+    iconInverse: '#181D27'
+  }
+});
+```
+
+## Available color options
+
+### Text colors
+
+| Property | Description |
+|----------|-------------|
+| `textPrimary` | Main text color |
+| `textPrimaryBrand` | Brand-colored text (links, highlights) |
+| `textPrimaryInverse` | Text on dark/colored backgrounds |
+| `textSecondary` | Secondary/muted text |
+| `textTertiary` | Subtle text (hints, placeholders) |
+| `textDisabled` | Disabled state text |
+
+### Icon colors
+
+| Property | Description |
+|----------|-------------|
+| `iconPrimaryNeutral` | Default icon color |
+| `iconPrimaryBrand` | Brand-colored icons |
+| `iconSecondary` | Secondary icons |
+| `iconDisabled` | Disabled state icons |
+| `iconInverse` | Icons on dark/colored backgrounds |
+| `iconInverseSecondary` | Secondary icons on dark backgrounds |
+
+### Background colors
+
+| Property | Description |
+|----------|-------------|
+| `bgButtonPrimary` | Primary button background |
+| `bgButtonSecondary` | Secondary button background |
+| `bgButtonTertiary` | Tertiary/ghost button background |
+| `bgButtonDisabled` | Disabled button background |
+| `bgCard` | Card component background |
+| `bgSurface` | Main surface background |
+| `bgSidebar` | Sidebar background |
+| `bgSurfaceElevated` | Elevated surface (modals, dropdowns) |
+| `bgInputField` | Input field background |
+| `bgSearchField` | Search input background |
+| `bgTableHeader` | Table header background |
+| `bgTableCell` | Table cell background |
+| `bgChip` | Chip/tag background |
+
+### Interactive states
+
+| Property | Description |
+|----------|-------------|
+| `bgSelected` | Selected item background |
+| `bgHover` | Hover state background |
+| `bgSelectedHover` | Hover on selected items |
+
+### Status colors
+
+| Property | Description |
+|----------|-------------|
+| `textError` | Error text color |
+| `textSuccess` | Success text color |
+| `textWarning` | Warning text color |
+| `bgError` | Error background |
+| `bgSuccess` | Success background |
+| `bgWarning` | Warning background |
+
+### Other
+
+| Property | Description |
+|----------|-------------|
+| `border` | Border color |
+| `radius` | Border radius for rounded corners |
+
+## Example: Dark theme
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  colors: {
+    textPrimary: '#ffffff',
+    textSecondary: '#a1a1aa',
+    bgSurface: '#18181b',
+    bgCard: '#27272a',
+    bgInputField: '#3f3f46',
+    border: '#3f3f46'
+  }
+});
+```
+
+## Example: Brand colors
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  title: 'Lattice AI',
+  colors: {
+    bgButtonPrimary: '#FFC222',
+    textPrimaryBrand: '#FFC222',
+    iconPrimaryBrand: '#FFC222',
+    textPrimaryInverse: '#181D27',
+    iconInverse: '#181D27'
+  }
+});
+```
+
+<Tip>
+  Start by customizing just `bgButtonPrimary` and `textPrimaryBrand` to match your brand's primary color. Add more overrides as needed.
+</Tip>
+

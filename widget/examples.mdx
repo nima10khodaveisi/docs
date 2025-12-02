@@ -1,0 +1,251 @@
+---
+title: Examples
+description: Common patterns and use cases
+---
+
+# Examples
+
+Here are some common ways to use the Voltai Widget.
+
+## Basic setup
+
+The simplest integration—just load and go:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Site</title>
+  <link rel="stylesheet" href="https://cdn.example.com/voltai/widget.css" />
+</head>
+<body>
+  <h1>Welcome</h1>
+
+  <script src="https://cdn.example.com/voltai/widget.js"></script>
+  <script>
+    Voltai.load({
+      apiKey: 'your-api-key',
+      enableGuestUser: true
+    });
+  </script>
+</body>
+</html>
+```
+
+## Custom branded theme
+
+Match the widget to your brand colors:
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  enableGuestUser: true,
+  title: 'Acme Support',
+  colors: {
+    // Primary brand color
+    bgButtonPrimary: '#FF6B00',
+    textPrimaryBrand: '#FF6B00',
+    iconPrimaryBrand: '#FF6B00',
+    
+    // Text on primary buttons
+    textPrimaryInverse: '#FFFFFF',
+    iconInverse: '#FFFFFF'
+  }
+});
+```
+
+## Help button integration
+
+Open the widget from your own button instead of (or in addition to) the floating button:
+
+```html
+<button id="help-btn" class="help-button">
+  Need help?
+</button>
+
+<script>
+  const voltai = Voltai.load({
+    apiKey: 'your-api-key',
+    enableGuestUser: true
+  });
+
+  document.getElementById('help-btn').onclick = () => {
+    voltai.open();
+  };
+</script>
+```
+
+## Contextual help
+
+Send a pre-filled question based on where the user is on your site:
+
+```html
+<button onclick="askAboutPricing()">Questions about pricing?</button>
+<button onclick="askAboutIntegration()">Need integration help?</button>
+
+<script>
+  const voltai = Voltai.load({
+    apiKey: 'your-api-key',
+    enableGuestUser: true
+  });
+
+  async function askAboutPricing() {
+    voltai.open();
+    await voltai.sendChat('What are your pricing plans?', {
+      topics: ['Sales', 'Pricing'],
+      newChat: true
+    });
+  }
+
+  async function askAboutIntegration() {
+    voltai.open();
+    await voltai.sendChat('How do I integrate with my existing systems?', {
+      topics: ['Technical', 'Integration'],
+      newChat: true
+    });
+  }
+</script>
+```
+
+## Event tracking
+
+Track widget usage for analytics:
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  enableGuestUser: true,
+  onReady: () => {
+    console.log('Widget ready');
+  },
+  onOpen: () => {
+    // Track in your analytics
+    gtag('event', 'widget_open', {
+      event_category: 'Support'
+    });
+  },
+  onClose: () => {
+    gtag('event', 'widget_close', {
+      event_category: 'Support'
+    });
+  }
+});
+
+// Track messages
+voltai.on('chat:send', (payload) => {
+  gtag('event', 'chat_message', {
+    event_category: 'Support',
+    event_label: payload.topics?.join(', ')
+  });
+});
+```
+
+## Widget control buttons
+
+Create a custom control panel:
+
+```html
+<div class="widget-controls">
+  <button id="open-btn">Open Chat</button>
+  <button id="close-btn">Close Chat</button>
+  <button id="toggle-btn">Toggle Chat</button>
+</div>
+
+<script>
+  const voltai = Voltai.load({
+    apiKey: 'your-api-key',
+    enableGuestUser: true,
+    title: 'Help Center'
+  });
+
+  document.getElementById('open-btn').onclick = () => voltai.open();
+  document.getElementById('close-btn').onclick = () => voltai.close();
+  document.getElementById('toggle-btn').onclick = () => voltai.toggle();
+</script>
+```
+
+## Form with topic selection
+
+Let users choose a topic before starting a chat:
+
+```html
+<form id="chat-form">
+  <input type="text" id="question" placeholder="Your question..." required />
+  
+  <select id="topic">
+    <option value="General">General</option>
+    <option value="Technical">Technical Support</option>
+    <option value="Billing">Billing</option>
+    <option value="Sales">Sales</option>
+  </select>
+  
+  <button type="submit">Ask</button>
+</form>
+
+<script>
+  const voltai = Voltai.load({
+    apiKey: 'your-api-key',
+    enableGuestUser: true
+  });
+
+  document.getElementById('chat-form').onsubmit = async (e) => {
+    e.preventDefault();
+    
+    const question = document.getElementById('question').value;
+    const topic = document.getElementById('topic').value;
+    
+    voltai.open();
+    await voltai.sendChat(question, {
+      topics: [topic],
+      newChat: true
+    });
+    
+    // Clear form
+    document.getElementById('question').value = '';
+  };
+</script>
+```
+
+## React integration
+
+Using the widget in a React application:
+
+```jsx
+import { useEffect, useRef } from 'react';
+
+function App() {
+  const voltaiRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize on mount
+    voltaiRef.current = window.Voltai.load({
+      apiKey: 'your-api-key',
+      enableGuestUser: true,
+      onReady: () => console.log('Widget ready')
+    });
+
+    // Cleanup on unmount
+    return () => {
+      voltaiRef.current?.destroy();
+    };
+  }, []);
+
+  const openChat = () => {
+    voltaiRef.current?.open();
+  };
+
+  return (
+    <div>
+      <h1>My React App</h1>
+      <button onClick={openChat}>Get Help</button>
+    </div>
+  );
+}
+```
+
+<Note>
+  Make sure the widget script is loaded before your React app mounts. You can add it to your `index.html` or load it dynamically.
+</Note>
+

@@ -1,0 +1,167 @@
+---
+title: Events
+description: React to widget state changes and chat activity
+---
+
+# Events
+
+The widget emits events that let you respond to user interactions and chat activity in your application.
+
+## Configuration callbacks
+
+The simplest way to handle events is through callback functions in your configuration:
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  onReady: () => {
+    console.log('Widget is ready');
+  },
+  onOpen: () => {
+    console.log('Widget opened');
+  },
+  onClose: () => {
+    console.log('Widget closed');
+  }
+});
+```
+
+| Callback | Description |
+|----------|-------------|
+| `onReady` | Called when the widget has initialized and authentication is complete |
+| `onOpen` | Called when the chat panel opens |
+| `onClose` | Called when the chat panel closes |
+
+## Event listener API
+
+For more control, use the `on()` and `off()` methods to subscribe to events dynamically.
+
+### on(event, handler)
+
+Subscribe to an event.
+
+```javascript
+const unsubscribe = voltai.on('widget:open', () => {
+  console.log('Chat opened');
+});
+```
+
+**Returns:** A function to remove the listener.
+
+### off(event, handler?)
+
+Remove event listeners.
+
+```javascript
+// Remove a specific handler
+voltai.off('widget:open', myHandler);
+
+// Remove all handlers for an event
+voltai.off('widget:open');
+```
+
+## Available events
+
+### Widget events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `widget:ready` | — | Widget initialized and ready |
+| `widget:open` | — | Chat panel opened |
+| `widget:close` | — | Chat panel closed |
+
+### Chat events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `chat:send` | `{ message, chatId, topics? }` | Message sent by user |
+| `chat:complete` | `{ chatId, success }` | Chat response completed |
+
+## Event payloads
+
+### chat:send
+
+Fired when a message is sent.
+
+```javascript
+voltai.on('chat:send', (payload) => {
+  console.log('Message:', payload.message);
+  console.log('Chat ID:', payload.chatId);
+  console.log('Topics:', payload.topics);
+});
+```
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `message` | string | The message text |
+| `chatId` | string | Unique identifier for the conversation |
+| `topics` | string[] | Topics associated with the message (optional) |
+
+### chat:complete
+
+Fired when a response has finished.
+
+```javascript
+voltai.on('chat:complete', (payload) => {
+  if (payload.success) {
+    console.log('Response received for chat:', payload.chatId);
+  } else {
+    console.log('Chat failed:', payload.chatId);
+  }
+});
+```
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `chatId` | string | The conversation identifier |
+| `success` | boolean | Whether the response completed successfully |
+
+## Example: Analytics integration
+
+Track widget usage with your analytics provider:
+
+```javascript
+const voltai = Voltai.load({
+  apiKey: 'your-api-key',
+  onOpen: () => {
+    analytics.track('Widget Opened');
+  },
+  onClose: () => {
+    analytics.track('Widget Closed');
+  }
+});
+
+voltai.on('chat:send', (payload) => {
+  analytics.track('Chat Message Sent', {
+    chatId: payload.chatId,
+    topics: payload.topics
+  });
+});
+
+voltai.on('chat:complete', (payload) => {
+  analytics.track('Chat Response Received', {
+    chatId: payload.chatId,
+    success: payload.success
+  });
+});
+```
+
+## Example: Cleanup on unmount
+
+In a single-page app, clean up listeners when navigating away:
+
+```javascript
+// Subscribe
+const unsubscribeOpen = voltai.on('widget:open', handleOpen);
+const unsubscribeSend = voltai.on('chat:send', handleSend);
+
+// Later, when unmounting
+unsubscribeOpen();
+unsubscribeSend();
+voltai.destroy();
+```
+
+<Tip>
+  The `on()` method returns an unsubscribe function. Store it if you need to remove the listener later.
+</Tip>
+
