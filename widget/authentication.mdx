@@ -24,9 +24,10 @@ When guest mode is enabled:
 - Users can start chatting immediately
 - A temporary session is created automatically
 - Chat history persists across page refreshes (stored locally)
+- Guest users are limited to **5 questions** before being prompted to sign in
 
 <Note>
-  Guest sessions are anonymous. If you need to identify users or persist conversations long-term, consider using authenticated mode instead.
+  Guest sessions are anonymous and have a 5-question limit. After reaching this limit, users will need to log in to continue chatting.
 </Note>
 
 ## Bot protection with hCaptcha
@@ -43,18 +44,15 @@ The captcha runs invisibly in the background—users won't see a challenge unles
   hCaptcha configuration is handled server-side. Contact your administrator if you need to enable or adjust captcha settings.
 </Tip>
 
-## Authenticated users (coming soon)
+## Authenticated users
 
-For applications where users have accounts, the widget will support popup-based authentication. This allows:
+For applications where users have accounts, the widget supports popup-based authentication. This allows:
 
 - Users to sign in with their existing credentials
 - Conversations tied to their account
 - Chat history synced across devices
 - Personalized responses based on user context
-
-<Warning>
-  Popup authentication is currently in development. Check back for updates or contact support for early access.
-</Warning>
+- Unlimited questions (no 5-question limit)
 
 ## How authentication works
 
